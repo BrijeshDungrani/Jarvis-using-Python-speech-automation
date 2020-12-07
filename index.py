@@ -4,10 +4,24 @@ import speech_recognition as sr
 import wikipedia
 import webbrowser
 import os
+import pyautogui
 
 ## for powerpoint
 import win32com.client
 import time
+
+# for cpu and battery functionality
+import psutil
+
+# for jokes
+import pyjokes
+
+#### variable  ####
+VScodePath = "C:\\Users\\Brijesh\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe"
+
+
+
+
 
 
 engine = pyttsx3.init('sapi5')
@@ -27,6 +41,23 @@ def wishMe():
     else:
         speak("Good Evening")
     speak("Please Tell me How Can I help you ?")
+
+def screenshot():
+    img = pyautogui.screenshot()
+    img.save('C:\\Users\\Brijesh\\Download/screenshot.png')
+
+def cpu():
+    usage = str(psutil.cpu_percent())
+    speak("CPU is at"+usage)
+
+    battery = psutil.sensors_battery()
+    speak("battery is at")
+    speak(battery.percent)
+
+def joke():
+    for i in range(5):
+        speak(pyjokes.get_jokes()[i])
+
 
 def ppt():
     app = win32com.client.Dispatch("PowerPoint.Application")
@@ -53,8 +84,9 @@ def takeCommand():
     with sr.Microphone() as source:
         print("Listening")
         #r.phrase_threshold = 1
+       # var = input("Please enter something: ")
         audio = r.listen(source)
-
+      
     try:
         print("Recognizing......")
         query = r.recognize_google(audio,language='en-in')
@@ -103,9 +135,18 @@ if __name__ == "__main__":
             speak("I am fine and you ?")
         
         elif 'open code' in query:
-            codePath = "C:\\Users\\Brijesh\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe"
-            os.startfile(codePath)
+            
+            os.startfile(VScodePath)
 
         elif 'open presentation' in query:
             ppt()
             # or command like next slide, previous slide
+        elif 'screenshot' in query:
+            speak("taking screenshot")
+            screenshot()
+        elif 'cpu' in query:
+            cpu()
+
+        elif 'joke' in query:
+            joke()
+        
