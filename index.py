@@ -98,6 +98,9 @@ if __name__ == "__main__":
             
         elif 'thank you' in query:
             speak("Welcome ")
+
+        elif "how are you" in query:
+            speak("I am fine and you ?")
         
         elif 'open code' in query:
             codePath = "C:\\Users\\Brijesh\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe"
